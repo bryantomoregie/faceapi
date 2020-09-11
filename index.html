@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
     <h1>Face API Demo</h1>
     <br>
     <h3>Enter Image URL</h3>
-    <input id="inputImage"></input><br>
-    <button onclick="processImage()">Analyze</button><br>
+    <input type="text" id="inputImage">
+    <br>
+    <button id="analyzeButton">Analyze</button><br>
     <h3>Image</h3>
     <img id="sourceImage" width="400" />
     <h3>Attributes</h3>
@@ -22,3 +22,37 @@
 <script src="face.js"></script>
 </body>
 </html>
+
+
+<!-- document.getElementById('btnAnalyse').addEventListener('click',function(){
+    const uri = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=false&returnFaceLandmarks=false&returnFaceAttributes=age,gender';
+    const url = document.getElementById('input').value;
+    const request = new Request(uri, {
+        method: 'POST',
+        mode: 'cors',
+        headers: new Headers({
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': '*MY-API-KEY*'
+        }),
+        body: JSON.stringify({
+            'url': url
+        })
+    });
+    document.getElementById('image').setAttribute('src',url);
+    fetch(request).then(function(response){
+        if(response.ok){
+            return response.json();
+        } else{
+            return Promise.reject(new Error(response.statusText));
+        }
+    }).then(function(object){
+        if(object.length > 0){
+            document.getElementById('output').innerHTML = "Age: " + object[0].faceAttributes.age + "<br>" +
+        "Gender: " + object[0].faceAttributes.gender;
+        } else{
+            document.getElementById('output').innerHTML = "No Faces Detected";
+        } 
+    }).catch(function(err){
+        alert(err);
+    });
+}); -->

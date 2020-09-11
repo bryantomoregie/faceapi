@@ -5,65 +5,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
   </head>
   <body>
-    <script type="text/javascript">
-      function processImage() {
-        // Replace <Subscription Key> with your valid subscription key.
-        var subscriptionKey = "11aee8f055024ae8995d500c85eeabd8";
-
-        var uriBase = "https://bryantomoregie.cognitiveservices.azure.com/face/v1.0/detect";
-
-        // Request parameters.
-        var params = {
-          returnFaceId: "true",
-          returnFaceLandmarks: "false",
-          returnFaceAttributes:
-            "age,gender"
-        };
-
-        // Display the image.
-        var sourceImageUrl = document.getElementById("inputImage").value;
-        document.querySelector("#sourceImage").src = sourceImageUrl;
-
-        // Perform the REST API call.
-        $.ajax({
-          url: uriBase + "?" + $.param(params),
-
-          // Request headers.
-          beforeSend: function (xhrObj) {
-            xhrObj.setRequestHeader("Content-Type", "application/json");
-            xhrObj.setRequestHeader(
-              "Ocp-Apim-Subscription-Key",
-              subscriptionKey
-            );
-          },
-
-          type: "POST",
-
-          // Request body.
-          data: '{"url": ' + '"' + sourceImageUrl + '"}',
-        })
-
-          .done(function (data) {
-            // Show formatted JSON on webpage.
-            $("#responseTextArea").val(JSON.stringify(data, null, 2));
-          })
-
-          .fail(function (jqXHR, textStatus, errorThrown) {
-            // Display error message.
-            var errorString =
-              errorThrown === ""
-                ? "Error. "
-                : errorThrown + " (" + jqXHR.status + "): ";
-            errorString +=
-              jqXHR.responseText === ""
-                ? ""
-                : jQuery.parseJSON(jqXHR.responseText).message
-                ? jQuery.parseJSON(jqXHR.responseText).message
-                : jQuery.parseJSON(jqXHR.responseText).error.message;
-            alert(errorString);
-          });
-      }
-    </script>
     <h1>Detect Faces:</h1>
     Enter the URL to an image that includes a face or faces, then click the
     <strong>Analyze face</strong> button.<br /><br />
@@ -91,3 +32,61 @@
     </div>
   </body>
 </html>
+
+<script type="text/javascript">
+  function processImage() {
+    // Replace <Subscription Key> with your valid subscription key.
+    var subscriptionKey = "11aee8f055024ae8995d500c85eeabd8";
+
+    var uriBase =
+      "https://bryantomoregie.cognitiveservices.azure.com/face/v1.0/detect";
+    // Request parameters.
+    var params = {
+      returnFaceId: "true",
+      returnFaceLandmarks: "false",
+      returnFaceAttributes:
+        "age,gender" 
+        
+    };
+
+    // Display the image.
+    var sourceImageUrl = document.getElementById("inputImage").value;
+    document.querySelector("#sourceImage").src = sourceImageUrl;
+
+    // Perform the REST API call.
+    $.ajax({
+      url: uriBase + "?" + $.param(params),
+
+      // Request headers.
+      beforeSend: function (xhrObj) {
+        xhrObj.setRequestHeader("Content-Type", "application/json");
+        xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+      },
+
+      type: "POST",
+
+      // Request body.
+      data: '{"url": ' + '"' + sourceImageUrl + '"}',
+    })
+
+      .done(function (data) {
+        // Show formatted JSON on webpage.
+        $("#responseTextArea").val(JSON.stringify(data, null, 2));
+      })
+
+      .fail(function (jqXHR, textStatus, errorThrown) {
+        // Display error message.
+        var errorString =
+          errorThrown === ""
+            ? "Error. "
+            : errorThrown + " (" + jqXHR.status + "): ";
+        errorString +=
+          jqXHR.responseText === ""
+            ? ""
+            : jQuery.parseJSON(jqXHR.responseText).message
+            ? jQuery.parseJSON(jqXHR.responseText).message
+            : jQuery.parseJSON(jqXHR.responseText).error.message;
+        alert(errorString);
+      });
+  }
+</script>
